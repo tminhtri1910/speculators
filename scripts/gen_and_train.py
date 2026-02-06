@@ -358,12 +358,13 @@ data_gen_args = DataGenArgs(
     max_samples=5000,
     seq_length=2048,
     tensor_parallel_size=1,
-    batch_size=8,
+    batch_size=4,
+    gpu_memory_utilization=0.6,
 )
 
 vocab_mapping_args = VocabMappingArgs(
     draft_vocab_size=32000,
-    target_vocab_size=128256,
+    target_vocab_size=151936,
 )
 
 train_args = TrainArgs(
