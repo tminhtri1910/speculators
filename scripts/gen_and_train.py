@@ -349,3 +349,36 @@ def run_e2e(
         packages,
         python_alt=f"torchrun --standalone --nproc_per_node={device_count}",
     )
+
+verifier_name_or_path = "Qwen/Qwen2.5-0.5B-Instruct"
+output_path = "./experiments/qwen-2.5-0.5b_sharegpt"
+
+data_gen_args = DataGenArgs(
+    train_data_path="sharegpt",
+    max_samples=5000,
+    seq_length=2048,
+    tensor_parallel_size=1,
+    batch_size=8,
+)
+
+vocab_mapping_args = VocabMappingArgs(
+    draft_vocab_size=32000,
+    target_vocab_size=128256,
+)
+
+train_args = TrainArgs(
+    run_name="qwen-2.5-0.5b.eagle3",
+    logger="tensorboard",
+    lr=1e-4,
+    epochs=10,
+    ttt_steps=3,
+    num_layers=1,
+)
+
+run_e2e(
+    verifier_name_or_path=verifier_name_or_path,
+    output_path=output_path,
+    data_gen_args=data_gen_args,
+    vocab_mapping_args=vocab_mapping_args,
+    train_args=train_args,
+)
